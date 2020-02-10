@@ -1,0 +1,163 @@
+extends: stylelint-config-standard
+plugins:
+  - stylelint-scss
+  - stylelint-order
+
+rules:
+  at-rule-empty-line-before: null
+  at-rule-no-unknown: null
+  block-opening-brace-space-before: null
+  declaration-colon-space-after: null
+  declaration-bang-space-before: null
+  declaration-empty-line-before: null
+  selector-list-comma-newline-after: always-multi-line
+
+  order/order:
+    - type: at-rule
+      name: use
+    - custom-properties
+    - declarations
+    - rules
+  order/properties-order:
+    - - content
+      - display
+      - groupName: Text & Font
+        emptyLineBefore: threshold
+        noEmptyLineBetween: true
+        properties:
+          - font
+          - font-family
+          - font-size
+          - line-height
+          - vertical-align
+          - font-weight
+          - font-style
+          - font-stretch
+          - letter-spacing
+          - font-variant
+          - text-transform
+          - font-size-adjust
+          - hyphens
+          - text-indent
+          - text-align
+          - text-align-last
+          - text-justify
+          - text-overflow
+          - white-space
+          - word-break
+          - word-spacing
+          - word-wrap
+          - writing-mode
+          - color
+          - text-decoration
+          - text-decoration-color
+          - text-decoration-line
+          - text-decoration-style
+          - text-shadow
+      - groupName: Box Model
+        emptyLineBefore: threshold
+        noEmptyLineBetween: true
+        properties:
+          - box-sizing
+          - width
+          - height
+          - min-width
+          - min-height
+          - max-width
+          - max-height
+          - padding
+          - padding-top
+          - padding-right
+          - padding-bottom
+          - padding-left
+          - margin
+          - margin-top
+          - margin-right
+          - margin-bottom
+          - margin-left
+          - overflow
+          - overflow-x
+          - overflow-y
+      - groupName: Flex/Grid Content
+        emptyLineBefore: threshold
+        noEmptyLineBetween: true
+        properties:
+          - flex
+          - flex-grow
+          - flex-shrink
+          - flex-basis
+          - align-self
+          - justify-self
+          - place-self
+      - groupName: Flex/Grid container
+        emptyLineBefore: threshold
+        noEmptyLineBetween: true
+        properties:
+          - flex-flow
+          - flex-direction
+          - flew-wrap
+          - grid
+          - grid-area
+          - grid-template
+          - grid-template-areas
+          - grid-template-rows
+          - grid-template-columns
+          - grid-gap
+          - grid-row-gap
+          - grid-column-gap
+          - grid-auto-flow
+          - grid-auto-rows
+          - grid-auto-columns
+          - grid-row
+          - grid-row-start
+          - grid-row-end
+          - grid-column
+          - grid-column-start
+          - grid-column-end
+          - place-items
+          - align-items
+          - justify-items
+          - place-content
+          - align-content
+          - justify-content
+          - order
+      - groupName: Background
+        emptyLineBefore: threshold
+        noEmptyLineBetween: true
+        properties:
+          - background
+          - background-color
+          - background-image
+          - background-origin
+          - background-position
+          - background-size
+          - background-repeat
+          - background-attachment
+          - background-clip
+    - unspecified: bottom
+      emptyLineBeforeUnspecified: threshold
+      emptyLineMinimumPropertyThreshold: 5
+
+  scss/at-each-key-value-single-line: true
+  scss/at-extend-no-missing-placeholder: true
+  scss/at-function-parentheses-space-before: always
+  scss/at-if-no-null: true
+  scss/at-import-no-partial-leading-underscore: true
+  scss/at-import-partial-extension: never
+  scss/at-mixin-argumentless-call-parentheses: never
+  scss/at-mixin-parentheses-space-before: always
+  scss/at-rule-conditional-no-parentheses: true
+  scss/at-rule-no-unknown: true
+  scss/dollar-variable-colon-newline-after: always-multi-line
+  scss/dollar-variable-colon-space-after: at-least-one-space
+  scss/dollar-variable-colon-space-before: never
+  scss/dollar-variable-no-missing-interpolation: true
+  scss/double-slash-comment-whitespace-inside: always
+  scss/declaration-nested-properties:
+    - always
+    - except: only-of-namespace
+  scss/declaration-nested-properties-no-divided-groups: true
+  scss/map-keys-quotes: always
+  scss/operator-no-newline-after: true
+  scss/selector-no-redundant-nesting-selector: true
+  scss/no-duplicate-mixins: true
