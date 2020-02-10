@@ -1,0 +1,11 @@
+// UTILITIES ------------------------------------------------------------------
+@use "tools" as *;
+@use "sass:list";
+
+// PUBLIC API -----------------------------------------------------------------
+@mixin font ($family, $sizes) {
+  $family: replace($family, ' ', '+');
+  $sizes: replace($sizes, ', ', ',');
+
+  @import url("https://fonts.googleapis.com/css?family=#{$family}:#{$sizes}&display=swap");
+}

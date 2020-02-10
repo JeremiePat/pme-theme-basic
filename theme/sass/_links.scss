@@ -1,0 +1,27 @@
+// UTILITIES ------------------------------------------------------------------
+@use "utils/colors" as *;
+
+// MAIN STYLES ----------------------------------------------------------------
+
+/* ----------------------------------------------------------------------------
+/* LINKS
+/* ------------------------------------------------------------------------- */
+
+.reveal {
+  a {
+    color: var(--link-color);
+    text-decoration: none;
+    transition: color 0.15s ease;
+
+    &:hover {
+      color: var(--link-hover-color);
+      text-shadow: none;
+      border: none;
+    }
+  }
+
+  .roll span::after {
+    color: var(--background-color);
+    background: var(--link-hover-color);
+  }
+}

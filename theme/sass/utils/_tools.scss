@@ -1,0 +1,22 @@
+// UTILITIES ------------------------------------------------------------------
+@use "sass:string";
+@use "sass:list";
+
+// PUBLIC API -----------------------------------------------------------------
+@function replace ($str, $search, $replace) {
+  $str: $str + ''; // Force list concatenation
+  $index: string.index($str, $search);
+
+  @while $index {
+    $before: string.slice($str, 1, $index - 1);
+    $after:  string.slice($str, $index + string.length($search), -1);
+    $str:    $before + $replace + $after;
+    $index:  string.index($str, $search);
+  }
+
+  @return $str;
+}
+
+@function unitless ($value) {
+  @return $value / ($value * 0 + 1);
+}

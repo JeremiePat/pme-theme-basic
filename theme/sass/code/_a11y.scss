@@ -1,0 +1,143 @@
+// Custom code theme
+// Based on the A11y Dark theme:
+// https://github.com/highlightjs/highlight.js/blob/master/src/styles/a11y-dark.css
+// and the A11y Light theme:
+// https://github.com/highlightjs/highlight.js/blob/master/src/styles/a11y-dark.css
+// Original Author: ericwbailey
+
+:root, .light {
+  --hljs-bg:      #2b2b2b;
+  --hljs-main:    #f8f8f2;
+  --hljs-comment: #d4d0ab;
+  --hljs-red:     #ffa07a;
+  --hljs-orange:  #f5ab35;
+  --hljs-yellow:  #ffd700;
+  --hljs-green:   #abe338;
+  --hljs-blue:    #00e0e0;
+  --hljs-purple:  #dcc6e0;
+}
+
+.dark {
+  --hljs-bg:      #fefefe;
+  --hljs-main:    #545454;
+  --hljs-comment: #696969;
+  --hljs-red:     #d91e18;
+  --hljs-orange:  #aa5d00;
+  --hljs-yellow:  #aa5d00;
+  --hljs-green:   #008000;
+  --hljs-blue:    #007faa;
+  --hljs-purple:  #7928a1;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --hljs-bg:      #fefefe;
+    --hljs-main:    #545454;
+    --hljs-comment: #696969;
+    --hljs-red:     #d91e18;
+    --hljs-orange:  #aa5d00;
+    --hljs-yellow:  #aa5d00;
+    --hljs-green:   #008000;
+    --hljs-blue:    #007faa;
+    --hljs-purple:  #7928a1;
+  }
+}
+
+.hljs {
+  display: block;
+
+  color: var(--hljs-main);
+
+  padding: 0.5em;
+  overflow-x: auto;
+
+  background: var(--hljs-bg);
+
+  // Comment
+  &-comment,
+  &-quote {
+    color: var(--hljs-comment);
+  }
+
+  // Red
+  &-variable,
+  &-template-variable,
+  &-tag,
+  &-name,
+  &-selector-id,
+  &-selector-class,
+  &-regexp,
+  &-deletion {
+    color: var(--hljs-red);
+  }
+
+  // Orange
+  &-number,
+  &-built_in,
+  &-builtin-name,
+  &-literal,
+  &-type,
+  &-params,
+  &-meta,
+  &-link {
+    color: var(--hljs-orange);
+  }
+
+  // Yellow
+  &-attribute {
+    color: var(--hljs-yellow);
+  }
+
+  // Green
+  &-string,
+  &-symbol,
+  &-bullet,
+  &-addition {
+    color:  var(--hljs-green);
+  }
+
+  // Blue
+  &-title,
+  &-section {
+    color: var(--hljs-blue);
+  }
+
+  // Purple
+  &-keyword,
+  &-selector-tag {
+    color: var(--hljs-purple);
+  }
+
+  &-emphasis {
+    font-style: italic;
+  }
+
+  &-strong {
+    font-weight: bold;
+  }
+}
+
+@media screen and (-ms-high-contrast: active) {
+  .hljs-addition,
+  .hljs-attribute,
+  .hljs-built_in,
+  .hljs-builtin-name,
+  .hljs-bullet,
+  .hljs-comment,
+  .hljs-link,
+  .hljs-literal,
+  .hljs-meta,
+  .hljs-number,
+  .hljs-params,
+  .hljs-string,
+  .hljs-symbol,
+  .hljs-type,
+  .hljs-quote {
+    color: highlight;
+  }
+
+  .hljs-keyword,
+  .hljs-selector-tag {
+    font-weight: bold;
+  }
+}

@@ -1,0 +1,465 @@
+// CONFIGURATION --------------------------------------------------------------
+$gap: 10px !default;
+
+// UTILITIES ------------------------------------------------------------------
+@use "sass:list";
+@use "sass:map";
+@use "sass:string";
+@use "utils/fonts" as *;
+@use "utils/tools" as *;
+
+// TOOLS ----------------------------------------------------------------------
+@function _h ($tpl) {
+  $headers: (h1, h2, h3, h4, h5, h6);
+  $output: '';
+
+  @each $h in $headers {
+    $output: $output + ', ' + replace($tpl, '$h', $h);
+  }
+
+  @return string.slice($output, 3);
+}
+
+// MAIN STYLES ----------------------------------------------------------------
+// To define your slides layout, use the reveal comment system on each slide
+// <!-- .slide: class="" -->
+// see: https://github.com/hakimel/reveal.js#slide-attributes
+.reveal .slides {
+  /* --------------------------------------------------------------------------
+  /* FLEX LAYOUT (default)
+  /* ----------------------------------------------------------------------- */
+
+  /* Flex slide positionning is a simple "where to stick" layout
+  /*
+  /* The following classes can be used to have all your element inside your
+  /* slide being stick on a given side of the slide
+  /*
+  /* Here's what you get:
+  /*
+  /* No classes (default)        .top                .bottom
+  /*  •---------------•    •---------------•    •---------------•
+  /*  |               |    |     #####     |    |               |
+  /*  |     #####     |    |               |    |               |
+  /*  |               |    |               |    |     #####     |
+  /*  •---------------•    •---------------•    •---------------•
+  /*
+  /*        .left             .left .top          .left .bottom
+  /*  •---------------•    •---------------•    •---------------•
+  /*  |               |    |#####          |    |               |
+  /*  |#####          |    |               |    |               |
+  /*  |               |    |               |    |#####          |
+  /*  •---------------•    •---------------•    •---------------•
+  /*
+  /*       .right            .right .top         .right .bottom
+  /*  •---------------•    •---------------•    •---------------•
+  /*  |               |    |          #####|    |               |
+  /*  |          #####|    |               |    |               |
+  /*  |               |    |               |    |          #####|
+  /*  •---------------•    •---------------•    •---------------•
+  /* ----------------------------------------------------------------------- */
+  section, section > section {
+    display: flex; // Reveal.js force display in the style attribute!
+
+    text-align: center;
+
+    height: 100%;
+    padding: 55px;
+
+    flex-flow: column;
+
+    // Default position: centered in the slide
+    // (classes .center-h and .center-v are implicite)
+    align-items: center;
+    justify-content: center;
+
+    :last-child {
+      margin-bottom: 0;
+    }
+
+    img, video {
+      margin: 0;
+    }
+
+    // Vertical alignement
+    &.top { justify-content: flex-start; }
+    &.bottom { justify-content: flex-end; }
+
+    // Horizontal alignement
+    &.left {
+      text-align: left;
+      align-items: flex-start;
+    }
+
+    &.right {
+      text-align: right;
+      align-items: flex-end;
+    }
+
+    &.center-h {
+      text-align: center;
+      align-items: center;
+    }
+
+    .stretch img,
+    img.stretch {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+
+  /* --------------------------------------------------------------------------
+  /* GRID LAYOUT
+  /* ----------------------------------------------------------------------- */
+
+  /* The grid layout provide a side by side layout
+  /*
+  /* •-------------------------------•
+  /* | title                         |
+  /* •---------------•---------------•
+  /* | 1st block     | 2nd block     |
+  /* |               |               |
+  /* |               |               |
+  /* |               |               |
+  /* •---------------•---------------•
+  /*
+  /* By default, this layout assume that there are a title, and 2 content
+  /* block. Everything else will be pushed away.
+  /*
+  /* Some extra modifier class can be used:
+  /*
+  /* * ---------------------------------------------------------------------- *
+  /* | Slide level modifier: LAYOUT                                           |
+  /* * --------------- * ---------------------------------------------------- *
+  /* | .title-bottom   | Put the title at the bottom of the slide             |
+  /* | .title-left     | Put the title on the left side of the slide          |
+  /* | .title-right    | Put the title on the right side of the slide         |
+  /* | .col-1-1        | 2 columns of equal size (default)                    |
+  /* | .col-1-2        | 2 columns with the 2nd twice as large as the 1st     |
+  /* | .col-2-1        | 2 columns with the 1st twice as large as the 2nd     |
+  /* | .col-1-1-1      | 3 columns of equal size                              |
+  /* | .col-1-1-2      | 3 columns with the last as large as the 2 others     |
+  /* | .col-1-2-1      | 3 columns with the 2nd as large as the 2 others      |
+  /* | .col-2-1-1      | 3 columns with the 3rd as large as the 2 others      |
+  /* * --------------- * ---------------------------------------------------- *
+  /* | Element level modifier                                                 |
+  /* |                                                                        |
+  /* | Note: They can be applied to the slide for global effect               |
+  /* | Note: Those modifier have no effects on <pre> elements                 |
+  /* * --------------- * ---------------------------------------------------- *
+  /* | .top (default)  | Push the element at the top of its slot              |
+  /* | .center-v       | Center the element verticaly in its slot             |
+  /* | .bottom         | Push the element at the bottom of its slot           |
+  /* | .left (default) | Push the element at the left (start) of its slot     |
+  /* | .center-h       | Center the element horizontaly in its slot           |
+  /* | .right          | Push the element at the right (end) of its slot      |
+  /* | .margin         | Add an extra bottom margin to the element            |
+  /* * --------------- * ---------------------------------------------------- *
+  /* | Specific image level modifier                                          |
+  /* * --------------- * ---------------------------------------------------- *
+  /* | .stretch        | Maximize the image size to the entire slot           |
+  /* * --------------- * ---------------------------------------------------- *
+  /* | Specific List level modifier                                           |
+  /* * --------------- * ---------------------------------------------------- *
+  /* | .no-bullet      | Remove list formating from <ul> and <ol> elements    |
+  /* * --------------- * ---------------------------------------------------- *
+  /*
+  /* Note that for markdown content, it's easier to set the list modifier at
+  /* the slide level then twick the title and the aside content than the other
+  /* way around.
+  /*
+  /* For example, <!-- .slide: class="grid col-1-2-1 center" -->
+  /* will create the following layout:
+  /*
+  /* •-----------------------•
+  /* |         title         |
+  /* •-------•-------•-------•
+  /* |  #1#  |  #2#  |  #3#  |
+  /* |       |       |       |
+  /* |       |       |       |
+  /* •-------•-------•-------•
+  /*
+  /* Add: <!-- .element: class="left" --> on title and #1#
+  /* Add: <!-- .element: class="middle" --> on #2#
+  /* Add: <!-- .element: class="right bottom" --> on #3#
+  /* And you'll get:
+  /*
+  /* •-----------------------•
+  /* | title                 |
+  /* •-------•-------•-------•
+  /* | #1#   |       |       |
+  /* |       |  #2#  |       |
+  /* |       |       |   #3# |
+  /* •-------•-------•-------•
+  /*
+  /* ----------------------------------------------------------------------- */
+
+  .grid {
+    text-align: left;
+    flex-flow: row wrap;
+    align-items: flex-start;
+
+    > p, > ul, > ol, > blockquote {
+      display: flex;
+      flex-flow: column;
+      align-items: flex-start;
+    }
+
+    ul, ol, li {
+      margin-bottom: 0;
+    }
+
+    pre {
+      // Code block are always left align no matter what
+      text-align: left !important;
+      max-height: none;
+
+      code {
+        min-height: 100%;
+      }
+    }
+
+    table {
+      // Table height must always be automatic, because
+      // otherwise, everything is unwantedly stretched.
+      // This lead to some alignment issue if you try to
+      // have two tables side by side due to the way flex
+      // behave on wrapped flows.
+      height: auto !important;
+      max-height: 100%;
+      align-self: flex-start;
+    }
+
+    > * {
+      width: calc(50% - #{$gap / 2});
+      height: 100%;
+      margin: {
+        bottom: 0;
+        right: $gap;
+      }
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+
+    // Title base style
+    #{_h('> $h')} {
+      width: 100%;
+      height: auto;
+      margin: 0 0 $gap 0;
+    }
+
+    $titles: (
+      1: $title-xxl,
+      2: $title-xl,
+      3: $title-l,
+      4: $title-m,
+      5: $title-m,
+      6: $title-m
+    );
+
+    $fs: (
+      'xxl': $size-xxl,
+      'xl':  $size-xl,
+      'l':   $size-l,
+      's':   $size-s,
+      'xs':  $size-xs,
+      'xxs': $size-xxs
+    );
+
+    // Anything following a title must have its
+    // height adjust based on the title height.
+    // This lead to overflow issues if the title
+    // flow over more than one line.
+    @each $n, $title in $titles {
+      $rel: unitless(map.get($title, size)) * map.get($title, height);
+
+      > h#{$n} ~ *,
+      &.font-m > h#{$n} ~ * {
+        $size: $size-m;
+        $height: $rel * $size;
+
+        height: calc(100% - #{$height} - #{$gap});
+      }
+
+      @each $name, $size in $fs {
+        &.font-#{$name} > h#{$n} ~ * {
+          $height: $rel * $size;
+
+          height: calc(100% - #{$height} - #{$gap});
+        }
+      }
+    }
+
+    // Slide level modifier
+    &.col-1-2 {
+      > * { width: calc(34% - #{$gap}); }
+      > * + * { width: 66%; }
+
+      #{_h('> $h')} {
+        width: 100%;
+        + * { width: calc(34% - #{$gap}); }
+        + * + * { width: 66%; }
+      }
+    }
+
+    &.col-2-1 {
+      > * { width: calc(66% - #{$gap}); }
+      > * + * { width: 34%; }
+
+      #{_h('> $h')} {
+        width: 100%;
+        + * { width: calc(66% - #{$gap}); }
+        + * + * { width: 34%; }
+      }
+    }
+
+    &.col-1-1-1 {
+      > * { width: calc(33.33% - #{$gap * 2 / 3}); }
+
+      #{_h('> $h')} {
+        width: 100%;
+        + * { width: calc(33.33% - #{$gap * 2 / 3}); }
+      }
+    }
+
+    &.col-1-1-2 {
+      > *         { width: calc(25% - #{$gap * 2 / 3}); }
+      > * + *     { width: calc(25% - #{$gap * 2 / 3}); }
+      > * + * + * { width: calc(50% - #{$gap * 2 / 3}); }
+
+      #{_h('> $h')} {
+        width: 100%;
+        + *         { width: calc(25% - #{$gap * 2 / 3}); }
+        + * + *     { width: calc(25% - #{$gap * 2 / 3}); }
+        + * + * + * { width: calc(50% - #{$gap * 2 / 3}); }
+      }
+    }
+
+    &.col-1-2-1 {
+      > *         { width: calc(25% - #{$gap * 2 / 3}); }
+      > * + *     { width: calc(50% - #{$gap * 2 / 3}); }
+      > * + * + * { width: calc(25% - #{$gap * 2 / 3}); }
+
+      #{_h('> $h')} {
+        width: 100%;
+        + *         { width: calc(25% - #{$gap * 2 / 3}); }
+        + * + *     { width: calc(50% - #{$gap * 2 / 3}); }
+        + * + * + * { width: calc(25% - #{$gap * 2 / 3}); }
+      }
+    }
+
+    &.col-2-1-1 {
+      > *         { width: calc(50% - #{$gap * 2 / 3}); }
+      > * + *     { width: calc(25% - #{$gap * 2 / 3}); }
+      > * + * + * { width: calc(25% - #{$gap * 2 / 3}); }
+
+      #{_h('> $h')} {
+        width: 100%;
+        + *         { width: calc(50% - #{$gap * 2 / 3}); }
+        + * + *     { width: calc(25% - #{$gap * 2 / 3}); }
+        + * + * + * { width: calc(25% - #{$gap * 2 / 3}); }
+      }
+    }
+
+    &.title-left,
+    &.title-right {
+      flex-wrap: nowrap;
+
+      #{_h('> $h')} {
+        writing-mode: vertical-lr;
+        width: auto;
+        height: 100%;
+        margin: 0 $gap 0 0;
+
+        ~ * {
+          height: 100%;
+        }
+      }
+    }
+
+    &.title-left {
+      > h1, > h2, > h3, > h4, > h5, > h6 {
+        transform: scale(-1);
+      }
+    }
+
+    &.title-right {
+      > h1, > h2, > h3, > h4, > h5, > h6 {
+        margin: 0 0 0 1rem;
+        order: 1;
+      }
+    }
+
+    &.title-bottom {
+      > h1, > h2, > h3, > h4, > h5, > h6 {
+        &:first-child {
+          margin: $gap 0 0 0;
+          order: 1;
+        }
+      }
+    }
+
+    &.no-bullet ul,
+    &.no-bullet ol,
+    ul.no-bullet,
+    ol.no-bullet,
+    ul.no-bullet ul,
+    ol.no-bullet ul,
+    ul.no-bullet ol,
+    ol.no-bullet ol {
+      padding: 0;
+      list-style: none;
+    }
+
+    // Element level modifier
+    &.left > *, .left {
+      text-align: left;
+      align-items: flex-start;
+    }
+
+    &.center-h > *, .center-h {
+      text-align: center;
+      align-items: center;
+    }
+
+    &.right > *, .right {
+      text-align: right;
+      align-items: flex-end;
+    }
+
+    &.center-v > *, .center-v {
+      justify-content: center;
+    }
+
+    &.center-v table, table.center-v {
+      align-self: center;
+    }
+
+    &.bottom > *, .bottom {
+      justify-content: flex-end;
+    }
+
+    &.bottom table, table.bottom {
+      align-self: flex-end;
+    }
+
+    &.margin > * *:not(:last-child),
+    .margin:not(:last-child):not(ul):not(ol),
+    .margin li:not(:last-child) {
+      margin-bottom: $gap;
+    }
+  }
+
+  // This where we are fighting against some reveal odd choices.
+  .print-pdf & section, .print-pdf & section > section {
+    height: auto; // This make sure that JS height computation is based on the content, not on the container.
+  }
+
+  .print-pdf & .pdf-page section {
+    display: flex !important;
+    height: 100%;
+    padding: 55px !important;
+  }
+}

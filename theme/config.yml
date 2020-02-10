@@ -1,0 +1,14 @@
+theme: null
+highlight: null
+
+markdown:
+  separator: '^\r?\n###\r?\n$' # Horizontal slides separator
+  vertical: '^\r?\n---\r?\n$' # Vertical slides separator
+
+options:
+  display: flex
+  margin: 0
+  center: false
+  transition: fade
+  pdfMaxPagesPerSlide: 1
+  pdfSeparateFragments: false

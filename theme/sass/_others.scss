@@ -1,0 +1,192 @@
+// CONFIGURATION --------------------------------------------------------------
+$gap: 1rem !default;
+
+// UTILITIES ------------------------------------------------------------------
+@use "sass:map";
+@use "utils/fonts" as *;
+
+// MAIN STYLES ----------------------------------------------------------------
+
+/* ----------------------------------------------------------------------------
+/* OTHER
+/* ------------------------------------------------------------------------- */
+
+.reveal {
+  p {
+    margin: 0 0 $gap 0;
+  }
+
+  /* Ensure certain elements are never larger than the slide itself */
+  img, video, iframe {
+    max: {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  b, strong {
+    font-weight: 600;
+  }
+
+  i, em {
+    font-style: italic;
+  }
+
+  del {
+    opacity: 0.6;
+  }
+
+  input[type=checkbox],
+  input[type=radio] {
+    font-size: inherit;
+    width: 0.75em;
+    height: 0.75em;
+  }
+
+  dl, ol, ul {
+    display: inline-block;
+    padding: 0 0 0 1em;
+    margin: 0 0 $gap 0;
+  }
+
+  ol {
+    list-style-type: decimal;
+  }
+
+  ul {
+    list-style-type: disc;
+  }
+
+  ul ul,
+  ul ol,
+  ol ol,
+  ol ul {
+    display: block;
+  }
+
+  dt {
+    font-weight: 700;
+  }
+
+  dd {
+    margin: 0 0 $gap $gap;
+  }
+
+  blockquote {
+    font-style: italic;
+
+    padding: 0.5em;
+    margin: 0 0 $gap 0;
+
+    background: var(--translucent-bg-color);
+
+    border-radius: 0.33rem;
+    box-shadow: 0 0 2px var(--translucent-bg-color);
+
+    p:first-child,
+    p:last-child {
+      display: inline-block;
+    }
+
+    :last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  q {
+    font-style: italic;
+  }
+
+  code {
+    font-family: $family-code;
+  }
+
+  pre {
+    $size: map.get($code-xs, size);
+
+    @include font($code-xs);
+    font-style: normal;
+    text-align: left;
+
+    // display: block;
+    // position: relative;
+    margin: 0 0 $gap 0;
+    overflow: auto;
+
+    border-radius: 0.33rem;
+    max: {
+      width: 100%;
+      height: $size * 24;
+    };
+
+    code {
+      display: block;
+      word-wrap: normal;
+      padding: $size * 0.5 $size * 0.75;
+
+      &[data-line-numbers] {
+        padding-left: $size * 0.5;
+      }
+    }
+  }
+
+  code:not(.hljs) {
+    @include font($code-xs);
+
+    padding: 0.1em 0.25em;
+    background: var(--translucent-bg-color);
+    border-radius: 0.33rem;
+  }
+
+  table {
+    margin: 0 0 $gap 0;
+    border: {
+      collapse: collapse;
+      spacing: 0;
+    }
+
+    th {
+      font-weight: bold;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 0.25em 0.5em;
+      border-bottom: 1px solid;
+
+      &[align="center"] {
+        text-align: center;
+      }
+
+      &[align="right"] {
+        text-align: right;
+      }
+    }
+
+    tbody tr:last-child {
+      th, td {
+        border-bottom: none;
+      }
+    }
+  }
+
+  sup {
+    vertical-align: super;
+    font: {
+      size: calc(1em * 0.6);
+      weight: 600;
+    }
+  }
+
+  sub {
+    vertical-align: -0.2em;
+    font: {
+      size: calc(1em * 0.6);
+      weight: 600;
+    }
+  }
+
+  small {
+    @include font($text-xs);
+  }
+}

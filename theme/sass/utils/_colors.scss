@@ -1,0 +1,115 @@
+// CONFIGURATION --------------------------------------------------------------
+$light: (
+  'text':       #000,
+  'link':       #900,
+  'title':      #000,
+  'background': #fff
+) !default;
+
+$dark: (
+  'text':       #fff,
+  'link':       #fcc,
+  'title':      #fff,
+  'background': #000
+) !default;
+
+// UTILITIES ------------------------------------------------------------------
+@use "sass:color";
+@use "sass:list";
+@use "sass:map";
+@use "sass:math";
+@use "sass:meta";
+
+// PUBLIC API -----------------------------------------------------------------
+@function luminance ($color) {
+  $R: color.red($color)   / 255;
+  $G: color.green($color) / 255;
+  $B: color.blue($color)  / 255;
+
+  $R: if($R < 0.03928, $R / 12.92, math.pow(($R + 0.055) / 1.055, 2.4));
+  $G: if($G < 0.03928, $G / 12.92, math.pow(($G + 0.055) / 1.055, 2.4));
+  $B: if($B < 0.03928, $B / 12.92, math.pow(($B + 0.055) / 1.055, 2.4));
+
+  @return (0.2126 * $R + 0.7152 * $G + 0.0722 * $B);
+}
+
+@function a11y-contrast ($front, $back) {
+  $flum: luminance($front);
+  $blum: luminance($back);
+
+  @if $flum > $blum {
+    @return ($flum + 0.05) / ($blum + 0.05);
+  }
+
+  @return ($blum + 0.05) / ($flum + 0.05);
+}
+
+@function normalize-color-schema ($schema) {
+  $text:  map.get($schema, 'text');
+  $link:  map.get($schema, 'link');
+  $title: map.get($schema, 'title');
+  $bg:    map.get($schema, 'background');
+
+  @if not $text { $text: #000; }
+  @if not $title { $title: $text; }
+  @if not $bg {
+    $a: a11y-contrast($text, #fff);
+    $b: a11y-contrast($text, #000);
+
+    $bg: if($a >= $b, #fff, #000);
+  }
+  @if not $link {
+    $link: #009;
+    $a: a11y-contrast(#009, $bg);
+    $b: a11y-contrast(#9cf, $bg);
+
+    $bg: if($a >= $b, #009, #9cf);
+  }
+
+  @return (
+    'text': $text,
+    'link': $link,
+    'title': $title,
+    'background': $bg
+  );
+}
+
+// Normalize user color schema
+$light: normalize-color-schema($light);
+$dark: normalize-color-schema($dark);
+
+// MAIN STYLE -----------------------------------------------------------------
+:root, .light {
+  --text-color:              #{map.get($light, 'text')};
+  --title-color:             #{map.get($light, 'title')};
+  --background-color:        #{map.get($light, 'background')};
+  --translucent-bg-color:    #{color.change(map.get($light, 'text'), $alpha: 0.075)};
+  --link-color:              #{map.get($light, 'link')};
+  --link-hover-color:        #{color.scale(map.get($light, 'link'), $saturation: 100%, $lightness: 20%)};
+  --select-color:            #{map.get($light, 'background')};
+  --select-background-color: #{color.change(map.get($light, 'text'), $alpha: 0.5)};
+}
+
+.dark {
+  --text-color:              #{map.get($dark, 'text')};
+  --title-color:             #{map.get($dark, 'title')};
+  --background-color:        #{map.get($dark, 'background')};
+  --translucent-bg-color:    #{color.change(map.get($dark, 'text'), $alpha: 0.33)};
+  --link-color:              #{map.get($dark, 'link')};
+  --link-hover-color:        #{color.scale(map.get($dark, 'link'), $saturation: 100%, $lightness: -20%)};
+  --select-color:            #{map.get($dark, 'background')};
+  --select-background-color: #{color.change(map.get($dark, 'text'), $alpha: 0.85)};
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-color:              #{map.get($dark, 'text')};
+    --title-color:             #{map.get($dark, 'title')};
+    --background-color:        #{map.get($dark, 'background')};
+    --translucent-bg-color:    #{color.change(map.get($dark, 'text'), $alpha: 0.33)};
+    --link-color:              #{map.get($dark, 'link')};
+    --link-hover-color:        #{color.scale(map.get($dark, 'link'), $saturation: 100%, $lightness: -20%)};
+    --select-color:            #{map.get($dark, 'background')};
+    --select-background-color: #{color.change(map.get($dark, 'text'), $alpha: 0.85)};
+  }
+}

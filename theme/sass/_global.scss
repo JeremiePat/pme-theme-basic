@@ -1,0 +1,47 @@
+// UTILITIES ------------------------------------------------------------------
+@use 'sass:map';
+@use 'utils/colors' as *;
+@use 'utils/fonts' as *;
+
+// MAIN STYLES ----------------------------------------------------------------
+
+/* ----------------------------------------------------------------------------
+/* GLOBAL STYLES
+/* ------------------------------------------------------------------------- */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--background-color);
+}
+
+::selection {
+  color: var(--select-color);
+  text-shadow: none;
+  background: var(--select-background-color);
+}
+
+::-moz-selection {
+  color: var(--select-color);
+  text-shadow: none;
+  background: var(--select-background-color);
+}
+
+.reveal {
+  @include font(map.merge($text-m, (size: $size-m)));
+
+  .slides section {
+    color: var(--text-color);
+
+    /* ------------------------------------------------------------------------
+    /* Because of the way reveal is handling backgrounds, you must set a
+    /* background explicitly. If you want the default background color
+    /* matching the them, you should set data-background-color with the
+    /* value var(--background-color);
+    /*
+    /* <!-- .slide: data-background-color="var(--background-color)" -->
+    /* --------------------------------------------------------------------- */
+  }
+}

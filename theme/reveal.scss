@@ -1,0 +1,26 @@
+// CONFIGURATION --------------------------------------------------------------
+$gap: 1rem;
+
+// UTILITIES ------------------------------------------------------------------
+@use "sass/utils/colors";
+@use "sass/utils/fonts";
+
+// MAIN STYLES ----------------------------------------------------------------
+@use "sass/code/a11y"; // Highlight theme for code coloring
+@use "sass/global";
+@use "sass/headers" with ($gap: $gap);
+@use "sass/others" with ($gap: $gap);
+@use "sass/links";
+@use "sass/images" with ($gap: $gap);
+@use "sass/ui";
+@use "sass/layout" with ($gap: $gap);
+
+/* ----------------------------------------------------------------------------
+/* PRINT BACKGROUND
+/* ------------------------------------------------------------------------- */
+
+@media print {
+  .backgrounds {
+    background-color: var(--background-color);
+  }
+}

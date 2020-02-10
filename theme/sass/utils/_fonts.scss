@@ -1,0 +1,77 @@
+// CONFIGURATION --------------------------------------------------------------
+$fonts: (
+  'Open Sans': ('400', '400i', '700'),
+  'Source Code Pro': ('400', '700')
+) !default;
+
+$family-text:  'Open Sans', sans-serif !default;
+$family-title: 'Open Sans', sans-serif !default;
+$family-code:  'Source Code Pro', monospace !default;
+
+// Absolute font size is defined here
+$size-xxl: 4rem    !default;
+$size-xl:  3rem    !default;
+$size-l:   2.5rem  !default;
+$size-m:   2rem    !default;
+$size-s:   1.5rem  !default;
+$size-xs:  1.25rem !default;
+$size-xxs: 1rem    !default;
+
+// Relative font size is expected here
+$text-xxl:  ('family': $family-text, 'size': 2em,    'height': 1.25) !default;
+$text-xl:   ('family': $family-text, 'size': 1.5em,  'height': 1.5 ) !default;
+$text-l:    ('family': $family-text, 'size': 1.25em, 'height': 1.2 ) !default;
+$text-m:    ('family': $family-text, 'size': 1em,    'height': 1.5 ) !default;
+$text-s:    ('family': $family-text, 'size': 0.85em, 'height': 2   ) !default;
+$text-xs:   ('family': $family-text, 'size': 0.7em,  'height': 1.2 ) !default;
+$text-xxs:  ('family': $family-text, 'size': 0.55em, 'height': 1.5 ) !default;
+
+$code-xxl:  ('family': $family-code, 'size': 2em,    'height': 1.25, 'wrap': break-word) !default;
+$code-xl:   ('family': $family-code, 'size': 1.5em,  'height': 1.5,  'wrap': break-word) !default;
+$code-l:    ('family': $family-code, 'size': 1.25em, 'height': 1.2,  'wrap': break-word) !default;
+$code-m:    ('family': $family-code, 'size': 1em,    'height': 1.5,  'wrap': break-word) !default;
+$code-s:    ('family': $family-code, 'size': 0.85em, 'height': 2,    'wrap': break-word) !default;
+$code-xs:   ('family': $family-code, 'size': 0.7em,  'height': 1.2,  'wrap': break-word) !default;
+$code-xxs:  ('family': $family-code, 'size': 0.55em, 'height': 1.5,  'wrap': break-word) !default;
+
+$title-xxl: ('family': $family-title, 'size': 2em,    'height': 1.25, 'weight': 700, 'wrap': break-word) !default;
+$title-xl:  ('family': $family-title, 'size': 1.5em,  'height': 1.5,  'weight': 700, 'wrap': break-word) !default;
+$title-l:   ('family': $family-title, 'size': 1.25em, 'height': 1.2,  'weight': 700, 'wrap': break-word) !default;
+$title-m:   ('family': $family-title, 'size': 1em,    'height': 1.5,  'weight': 700, 'wrap': break-word) !default;
+$title-s:   ('family': $family-title, 'size': 0.85em, 'height': 2,    'weight': 700, 'wrap': break-word) !default;
+$title-xs:  ('family': $family-title, 'size': 0.7em,  'height': 1.2,  'weight': 700, 'wrap': break-word) !default;
+$title-xxs: ('family': $family-title, 'size': 0.55em, 'height': 1.5,  'weight': 700, 'wrap': break-word) !default;
+
+// UTILITIES ------------------------------------------------------------------
+@use "sass:map";
+@use "google";
+
+// PUBLIC API -----------------------------------------------------------------
+@mixin font ($fontDefinition) {
+  @each $key, $value in $fontDefinition {
+    @if $key == 'family'   { font-family:    $value; }
+    @else if $key == 'size'     { font-size:      $value; }
+    @else if $key == 'height'   { line-height:    $value; }
+    @else if $key == 'weight'   { font-weight:    $value; }
+    @else if $key == 'style'    { font-style:     $value; }
+    @else if $key == 'spacing'  { letter-spacing: $value; }
+    @else if $key == 'shadow'   { text-shadow:    $value; }
+    @else if $key == 'transform'{ text-transform: $value; }
+    @else if $key == 'wrap'     { word-wrap:      $value; }
+    @else if $key == 'align'    { text-align:     $value; }
+  }
+}
+
+// MAIN STYLES ----------------------------------------------------------------
+@each $family, $size in $fonts {
+  @include google.font($family, $size);
+}
+
+// font size modifiers
+.font-xxl { font-size: $size-xxl; }
+.font-xl  { font-size: $size-xl; }
+.font-l   { font-size: $size-l; }
+.font-m   { font-size: $size-m; }
+.font-s   { font-size: $size-s; }
+.font-xs  { font-size: $size-xs; }
+.font-xxs { font-size: $size-xxs; }

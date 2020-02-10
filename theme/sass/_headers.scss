@@ -1,0 +1,26 @@
+// CONFIGURATION --------------------------------------------------------------
+$gap: 1rem !default;
+
+// UTILITIES ------------------------------------------------------------------
+@use "utils/colors" as *;
+@use "utils/fonts" as *;
+
+// MAIN STYLES ----------------------------------------------------------------
+
+/* ----------------------------------------------------------------------------
+/* HEADERS
+/* ------------------------------------------------------------------------- */
+
+.reveal {
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--title-color);
+    margin: 0 0 $gap 0;
+  }
+
+  h1 { @include font($title-xxl); }
+  h2 { @include font($title-xl); }
+  h3 { @include font($title-l); }
+  h4 { @include font($title-m); }
+  h5 { @include font($title-m); }
+  h6 { @include font($title-m); }
+}
