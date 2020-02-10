@@ -1,6 +1,6 @@
 {
   "name": "stuffme-theme-basic",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "This is a basic theme to be used with StuffME",
   "directories": {
     "theme": "./theme"
