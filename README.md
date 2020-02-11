@@ -5,7 +5,7 @@ This is a basic theme to be used with [**StuffMe**](https://github.com/JeremiePa
 ## Install
 
 ```bash
-$ npm i https://github.com/JeremiePat/stuffme-theme-basic.git -g
+$ npm i stuffme-theme-basic -g
 ```
 
 ## Usage
@@ -18,7 +18,7 @@ $ stuff serve -t stuffme-theme-basic
 $ stuff make -t stuffme-theme-basic
 ```
 
-## Customize your slide
+## Customize your slides
 
 This basic theme provide many CSS classes that you can applied to your slides
 or elements to customize their layout.
